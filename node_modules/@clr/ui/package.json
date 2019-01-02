@@ -1,0 +1,46 @@
+{
+  "_from": "@clr/ui@^1.0.3-patch",
+  "_id": "@clr/ui@1.0.3-patch",
+  "_inBundle": false,
+  "_integrity": "sha512-sV7ZkvQ7UiVq9m26kE9OBpX23FZOGAOqRqUjnz/5XwHPyN/WEBF6HixKfrCO1PYfoCfn4aF3DnCT3qitBPYHmA==",
+  "_location": "/@clr/ui",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@clr/ui@^1.0.3-patch",
+    "name": "@clr/ui",
+    "escapedName": "@clr%2fui",
+    "scope": "@clr",
+    "rawSpec": "^1.0.3-patch",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.3-patch"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@clr/ui/-/ui-1.0.3-patch.tgz",
+  "_shasum": "a2ed579e90a86fb546d67d84478b1211602c91b5",
+  "_spec": "@clr/ui@^1.0.3-patch",
+  "_where": "C:\\Users\\bessjust\\Desktop\\projects\\stars",
+  "author": {
+    "name": "clarity"
+  },
+  "bugs": {
+    "url": "https://github.com/vmware/clarity/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "CSS for Clarity",
+  "homepage": "https://vmware.github.io/clarity/",
+  "license": "MIT",
+  "name": "@clr/ui",
+  "peerDependencies": {
+    "@clr/icons": "1.0.3-patch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vmware/clarity.git"
+  },
+  "version": "1.0.3-patch"
+}

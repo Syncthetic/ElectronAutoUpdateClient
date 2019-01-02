@@ -1,5 +1,26 @@
-<p>just home comp here</p>
+<app-login></app-login>
+<button class="btn btn-success" (click)="creatingApplication = !creatingApplication">New Application</button>
 <button class="btn btn-primary" (click)="apps.request_applications_from_server()">Fetch apps</button>
+<div *ngIf="creatingApplication">
+  <input type="text" placeholder="Application Name" #appName>
+  <br>
+  <input type="text" placeholder="Version Number" #appVersion>
+  <br>
+  <input type="text" placeholder="Download URL Link" #appLink>
+  <br>
+  <button class="btn primary" (click)="createApplication(appName.value, appVersion.value, appLink.value)">Create</button>
+</div>
+
 <div *ngIf="apps.applications.length > 0">
   <div *ngFor="let app of apps.applications">{{app.name}} version: {{app.version}}</div>
 </div>
+
+<clr-vertical-nav>
+  <a clrVerticalNavLink routerLink="./charmander" routerLinkActive="active">Charmander</a>
+  <a clrVerticalNavLink routerLink="./jigglypuff" routerLinkActive="active">Jigglypuff</a>
+  <a clrVerticalNavLink routerLink="./pikachu" routerLinkActive="active">Pikachu</a>
+  <a clrVerticalNavLink routerLink="./raichu" routerLinkActive="active">Raichu</a>
+  <a clrVerticalNavLink routerLink="./snorlax" routerLinkActive="active">Snorlax</a>
+  <div class="nav-divider"></div>
+  <a clrVerticalNavLink routerLink="./credit" routerLinkActive="active">Credit</a>
+</clr-vertical-nav>

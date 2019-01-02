@@ -1,51 +1,106 @@
 import { Injectable } from '@angular/core';
-import * as mongodb from 'mongodb';
+import {
+  Stitch,
+  UserPasswordAuthProviderClient,
+  RemoteMongoClient,
+  UserPasswordCredential,
+  RemoteMongoCollection,
+  RemoteMongoDatabase,
+  AnonymousCredential
+} from "mongodb-stitch-browser-sdk";
+import { stitchServiceErrorCodeFromApi } from '../../../../node_modules/mongodb-stitch-core-sdk/dist/esm/StitchServiceErrorCode';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MongoService {
+export class StitchService {
 
   constructor(
   ) { }
 
-  private CONNECTION_URL = process.env.ROE_DB_CONNECTION
-  private DATABASE_NAME = process.env.ROE_DB_NAME
-  private COLLECTIONS = process.env.ROE_COLLECTIONS        
-  private COLLECTION_LIST = []
-  private collection
+  APP_ID: string = 'electronupdater-wqses'
+  db: string
+  coll: string
+  client = Stitch.initializeDefaultAppClient(this.APP_ID);
+  creds: UserPasswordCredential
+  // anonCreds: AnonymousCredential = new AnonymousCredential()
 
-  async get_instance () {
-    if ( this.collection ) return this.collection
-    return this.connect()
+  // Return the E-mail password client from Stitch
+  emailPassClient() {
+    return Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory)
   }
 
-   connect () {
-    mongodb.connect(this.CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        if(error) { throw error; }
-        const database = client.db(this.DATABASE_NAME);
-        this.initialize_collections(database)
-        this.set_collection(database.collection(this.COLLECTION_LIST[0].name))
-        console.log("Connected to database: " + this.DATABASE_NAME);
+  retrieveDB(db = this.db) {
+    return this.client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db(db)
+  }
+
+
+  register(username, password) {
+    const emailPassClient = this.emailPassClient()
+    return emailPassClient.registerWithEmail(username, password)
+  }
+
+  verifyEmail(token, tokenID) {
+    return this.emailPassClient().confirmUser(token, tokenID)
+  }
+
+  reconfirmEmail(email) {
+    return this.emailPassClient().resendConfirmationEmail(email)
+  }
+
+  login(email, pass) {
+    this.creds = new UserPasswordCredential(email, pass)
+    return this.client.auth.loginWithCredential(this.creds)
+  }
+
+  insertItem({ db, coll }: { db: string, coll: string }, obj: object) {
+    return this.prepare({ db, coll }).then(prep => {
+      return prep.insertOne(obj)
     })
   }
 
-  private initialize_collections (database) {
-      this.COLLECTIONS.split(':').map(coll => {
-          const collection = { name: coll, ref: database.collection(coll) }
-          this.COLLECTION_LIST.push(collection)
-      })
+  insertMany({ db, coll }: { db: string, coll: string }, list: Array<object>) {
+    return this.prepare({ db, coll }).then(prep => {
+      prep.insertMany(list)
+    })
   }
 
-  coll (name: string) {
-      return this.COLLECTION_LIST.find(coll => { return coll.name === name } ).ref
+  find({ db, coll }: { db: string, coll: string }, query: object) {
+    return this.client.auth.loginWithCredential(this.creds).then(user => {
+      return this.retrieveDB(db).collection(coll)
+    }).then(prep => {
+      return prep.find(query).asArray()
+    })
   }
 
-  client () {
-    return this.collection
+  prepare({ db, coll }: { db: string, coll: string }): Promise<RemoteMongoCollection<{}>> {
+    return this.client.auth.loginWithCredential(this.creds).then(user => {
+      return this.retrieveDB(db).collection(coll)
+    })
   }
 
-  set_collection (collection) {
-    this.collection = collection
+  db_prepare(db: string): Promise<RemoteMongoDatabase> {
+    return this.client.auth.loginWithCredential(this.creds).then(user => {
+      return this.retrieveDB(db)
+    })
   }
+
+  deleteCollection({ db, coll }: { db: string, coll: string }) {
+    return this.db_prepare(db).then(prep => {
+      return prep.collection(coll).deleteMany({})
+    })
+  }
+
+  deleteObject({ db, coll }: { db: string, coll: string }, collection_object: object) {
+    return this.db_prepare(db).then(prep => {
+      return prep.collection(coll).deleteOne(collection_object)
+    })
+  }
+
+  updateObject({ db, coll }: { db: string, coll: string }, searchObject: object, setObject: object) {
+    return this.db_prepare(db).then(prep => {
+      return prep.collection(coll).updateOne(searchObject, setObject)
+    })
+  }
+
 }

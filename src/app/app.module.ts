@@ -19,11 +19,11 @@ import { WebviewDirective } from './directives/webview.directive';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 
+import { ClarityModule } from "@clr/angular";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApplicationsComponent } from './components/applications/applications.component';
 import { ApplicationDetailsComponent } from './components/application/application.component';
-
-import { MongoService } from './services/mongo/mongo.service'
+import { LoginComponent } from './components/login/login.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -37,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective,
     ApplicationsComponent,
     ApplicationDetailsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -51,7 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    BrowserAnimationsModule
+    ClarityModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
@@ -59,8 +61,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export class AppModule { 
   constructor (
-    private mongo: MongoService
   ) {
-    this.mongo.connect()
   }
 }
