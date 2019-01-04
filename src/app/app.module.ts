@@ -24,6 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ApplicationsComponent } from './components/applications/applications.component';
 import { ApplicationDetailsComponent } from './components/application/application.component';
 import { LoginComponent } from './components/login/login.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NewApplicationComponent } from './components/new-application/new-application.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +41,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ApplicationsComponent,
     ApplicationDetailsComponent,
     LoginComponent,
+    SidenavComponent,
+    HeaderComponent,
+    NewApplicationComponent
   ],
   imports: [
     BrowserModule,
@@ -46,14 +52,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ClarityModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
-      }
-    }),
-    ClarityModule
+      },
+    })
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

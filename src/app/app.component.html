@@ -1,12 +1,13 @@
 <div class="main-container">
   <!-- <div class="alert alert-app-level">
   </div> -->
-  <header class="header header-6">
-      header
-  </header>
+  <app-header></app-header>
   <div class="content-container">
       <div class="content-area">
         <router-outlet></router-outlet>
       </div>
+      <nav *ngIf="apps.hasApps()" class="sidenav">
+        <app-sidenav></app-sidenav>
+      </nav>
   </div>
 </div>

@@ -1,0 +1,7 @@
+<clr-vertical-nav *ngIf="apps.hasApps()">
+  <div *ngFor="let app of apps.applications">
+    <a clrVerticalNavLink [routerLink]="['/application', app.name]">
+      {{ app.name }}
+    </a>
+  </div>
+</clr-vertical-nav>

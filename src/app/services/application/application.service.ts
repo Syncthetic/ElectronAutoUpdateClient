@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StitchService } from '../mongo/mongo.service'
 
-interface Application {
+export interface Application {
   name: string
   version: string
   download: string
@@ -37,6 +37,18 @@ export class ApplicationService {
       }
     )
   }
-    
+
+  deleteApplication(application: Application) {
+
+  }
   
+  returnApplication(application_name: string): Application {
+    return this.applications.find((app: Application) => {
+      return app.name === application_name
+    })
+  }
+  
+  hasApps (): boolean {
+    return this.applications.length > 0
+  }
 }

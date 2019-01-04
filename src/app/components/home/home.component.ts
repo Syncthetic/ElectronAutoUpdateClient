@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApplicationService } from '../../services/application/application.service'
-
-// import { MongoService } from '../../services/mongo/mongo.service'
 
 @Component({
   selector: 'app-home',
@@ -11,7 +9,6 @@ import { ApplicationService } from '../../services/application/application.servi
 export class HomeComponent implements OnInit {
 
   constructor(
-    // private mongo: MongoService
     public apps: ApplicationService
   ) { }
 
@@ -19,8 +16,6 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-    // this.mongo.connect()
-    this.apps.request_applications_from_server()
   }
   
   createApplication (name: string, version: string, download: string) {

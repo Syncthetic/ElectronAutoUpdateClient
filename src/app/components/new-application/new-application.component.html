@@ -1,0 +1,26 @@
+<clr-wizard #wizard
+  [(clrWizardOpen)]="creatingApplication"
+  clrWizardSize="lg"
+>
+  <clr-wizard-title>New Application</clr-wizard-title>
+
+  <clr-wizard-button [type]="'cancel'" (click)="toggle()" >Cancel</clr-wizard-button>
+  <clr-wizard-button [type]="'previous'">Back</clr-wizard-button>
+  <clr-wizard-button [type]="'next'">Next</clr-wizard-button>
+  <clr-wizard-button [type]="'finish'" (click)="toggle()">Finish</clr-wizard-button>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="blank(appName.value)">
+    <ng-template clrPageTitle>Application Name</ng-template>
+    <input #appName type="text" placeholder="Application Name">
+  </clr-wizard-page>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="blank(appVersion.value)">
+    <ng-template clrPageTitle>Version Information</ng-template>
+    <input #appVersion type="text" placeholder="Latest Version Number">
+  </clr-wizard-page>
+
+  <clr-wizard-page [clrWizardPageNextDisabled]="blank(appLink.value)">
+    <ng-template clrPageTitle>Download Link</ng-template>
+    <input #appLink type="text" placeholder="Download URL">
+  </clr-wizard-page>
+</clr-wizard>
