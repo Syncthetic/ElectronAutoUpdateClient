@@ -12,16 +12,6 @@ export class HomeComponent implements OnInit {
     public apps: ApplicationService
   ) { }
 
-  public creatingApplication: boolean = false
-
-
   ngOnInit() {
   }
-  
-  createApplication (name: string, version: string, download: string) {
-    const app = {name, version, download}
-    this.apps.createApplication(app)
-    this.creatingApplication = false
-  }
-
 }

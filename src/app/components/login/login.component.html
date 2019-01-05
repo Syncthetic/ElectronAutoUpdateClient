@@ -1,10 +1,7 @@
-<div *ngIf="!loggedIn">
 <input type="text" name="email" clrInput placeholder="Email" #user />
 <br>
 <clr-password-container>
   <input type="password" name="password" clrPassword placeholder="Password" #pass />
 </clr-password-container>
 <br>
-<button class="btn btn-primary" (click)="stitch_login(user.value, pass.value)">Login</button>
-<br>
-</div>
+<button class="btn btn-primary" (click)="loginAttempt(user.value, pass.value)">Login</button>

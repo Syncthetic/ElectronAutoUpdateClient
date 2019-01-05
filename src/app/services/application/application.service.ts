@@ -5,7 +5,7 @@ export interface Application {
   name: string
   version: string
   download: string
-  additionInfo?: any[]
+  additionalInfo?: {}
 }
 
 @Injectable({
@@ -39,7 +39,25 @@ export class ApplicationService {
   }
 
   deleteApplication(application: Application) {
+    this.stitch.deleteObject({db: 'applications', coll: 'updates'}, application).then(
+      (res) => {
+        console.log('Delete result', res)
+        this.request_applications_from_server()
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  }
 
+  updateApplication(application: Application) {
+    let searchObject = { name: application.name }
+    this.stitch.updateObject({db: 'applications', coll: 'updates'}, searchObject, application).then(
+      (res) => {
+        console.log('Update result', res)
+        this.request_applications_from_server()
+      }
+    )
   }
   
   returnApplication(application_name: string): Application {

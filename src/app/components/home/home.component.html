@@ -1,11 +1,7 @@
-<app-login></app-login>
-<button class="btn btn-success" (click)="creatingApplication = !creatingApplication">New Application</button>
-<button class="btn btn-primary" (click)="apps.request_applications_from_server()">Fetch apps</button>
+<!-- <app-login></app-login> -->
+
+<!-- <button class="btn btn-primary" (click)="apps.request_applications_from_server()">Fetch apps</button> -->
 
 <div *ngIf="apps.hasApps()">
   <div *ngFor="let app of apps.applications">{{app.name}} version: {{app.version}}</div>
 </div>
-
-<app-new-application
-  [(creatingApplication)]="creatingApplication"
-></app-new-application>

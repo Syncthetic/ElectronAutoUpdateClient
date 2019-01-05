@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ClrWizard } from "@clr/angular";
-import { Injectable } from '@angular/core'
+import { ApplicationService, Application } from '../../services/application/application.service'
 
 @Component({
   selector: 'app-new-application',
@@ -9,28 +9,53 @@ import { Injectable } from '@angular/core'
 })
 
 export class NewApplicationComponent implements OnInit {
-
   constructor(
-    // private wiz: AppWizard
+    private apps: ApplicationService
   ) { }
-  @Input() creatingApplication: boolean
-  @Output() creatingApplicationNew = new EventEmitter<boolean>()
+
+  @ViewChild("wizard") wizard: ClrWizard
+  public _open: boolean = false;
+  public creatingApplication: boolean = false
+  public model: Application = {
+    name: '',
+    version: '',
+    download: '',
+    additionalInfo: {}
+  }
 
   ngOnInit() {
+  }
+
+  open() {
+    this._open = !this._open
+  }
+
+  updateModel(property: string, val: string): void {
+    this.model[property] = val
+  }
+
+  updateAdditionInfo(property: string, val: string): void {
+    console.log('Should set ' + property + ' to ' + val, this.model)
+    this.model.additionalInfo[property] = val
+  }
+
+  additionalPropertiesExist (): boolean {
+    return Object.keys(this.model.additionalInfo).length > 0
   }
 
   blank(input: string) {
     return input.length <= 0
   }
 
-   toggle() {
-    this.creatingApplication = !this.creatingApplication
-    console.log('creatingApplication', this.creatingApplication)
-    this.creatingApplicationNew.emit(this.creatingApplication)
+  createApplication(name: string, version: string, download: string) {
+    const app = this.model
+    console.log('Should create app', app)
+    this.apps.createApplication(app)
+    this.wizard.reset()
+    this.apps.request_applications_from_server()
   }
 
-  closeWizard () {
-    this.creatingApplication = false
-    this.creatingApplicationNew.emit(false)
+  resetWizard () {
+    this.wizard.reset()
   }
 }

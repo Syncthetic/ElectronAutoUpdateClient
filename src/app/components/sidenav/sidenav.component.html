@@ -1,4 +1,8 @@
 <clr-vertical-nav *ngIf="apps.hasApps()">
+  <!-- <button class="btn btn-primary" (click)="apps.request_applications_from_server()">Fetch apps</button>
+  <div class="nav-divider"></div> -->
+  <app-new-application></app-new-application>
+  <div class="nav-divider"></div>
   <div *ngFor="let app of apps.applications">
     <a clrVerticalNavLink [routerLink]="['/application', app.name]">
       {{ app.name }}

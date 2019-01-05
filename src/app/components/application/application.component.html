@@ -1,4 +1,22 @@
+<div class="btn-group btn-primary">
+  <button class="btn" (click)="editorMode = !editorMode">Edit</button>
+  <button
+    class="btn btn-danger"
+    (click)="deleteApp()"
+  >Delete</button>
+</div>
+
 <p>
   You are viewing the {{app.name}} application details!
 </p>
 <p>Version {{app.version}}</p>
+
+<div *ngIf="editorMode">
+  <div *ngFor="let prop of app | keyvalue">
+    <div *ngIf="prop.key !== '_id' && prop.key !== 'name'">
+      <p>{{prop.key}}</p>
+      <input type="text" placeholder="{{prop.value}}" (keyup)="modifyApp(prop.key, $event.target.value)">
+    </div>
+  </div>
+  <button class="btn btn-success" (click)="updateApp()">Save</button>
+</div>

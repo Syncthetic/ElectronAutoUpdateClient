@@ -5,13 +5,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ApplicationDetailsComponent } from './components/application/application.component';
 
+import { AuthenticatedGuard as AuthGuard } from './authenticated.guard';
+import { LoginComponent } from './components/login/login.component';
+
 const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent
-    },
-    { path: 'applications', component: ApplicationsComponent },
-    { path: 'application/:name', component: ApplicationDetailsComponent }
+    { path: 'login', component: LoginComponent },
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'applications', component: ApplicationsComponent, canActivate: [AuthGuard] },
+    { path: 'application/:name', component: ApplicationDetailsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
