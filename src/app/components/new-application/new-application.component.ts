@@ -34,9 +34,13 @@ export class NewApplicationComponent implements OnInit {
     this.model[property] = val
   }
 
-  updateAdditionInfo(property: string, val: string): void {
+  updateAdditionalInfo(property: string, val: string): void {
     console.log('Should set ' + property + ' to ' + val, this.model)
     this.model.additionalInfo[property] = val
+  }
+
+  removeAdditionalInfo(property: string, val: string): void {
+    delete this.model.additionalInfo[property]
   }
 
   additionalPropertiesExist (): boolean {
@@ -52,7 +56,6 @@ export class NewApplicationComponent implements OnInit {
     console.log('Should create app', app)
     this.apps.createApplication(app)
     this.wizard.reset()
-    this.apps.request_applications_from_server()
   }
 
   resetWizard () {

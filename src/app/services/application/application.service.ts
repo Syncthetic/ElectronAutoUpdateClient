@@ -34,6 +34,7 @@ export class ApplicationService {
     this.stitch.insertItem({db: 'applications', coll: 'updates'}, application).then(
       (res) => {
         console.log(res)
+        this.request_applications_from_server()
       }
     )
   }

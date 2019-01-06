@@ -34,7 +34,7 @@
       <br>
       <input #propValue type="text" placeholder="value">
       <br>
-      <button (click)="updateAdditionInfo(propName.value, propValue.value)" class="btn primary">
+      <button (click)="updateAdditionalInfo(propName.value, propValue.value)" class="btn primary">
         <clr-icon shape="plus"></clr-icon> Field
       </button>
     
@@ -42,7 +42,7 @@
         <p>Properties</p>
         <div *ngFor="let prop of model.additionalInfo | keyvalue">
           <p>{{prop.key}}: {{prop.value}}</p>
-          <button class="btn btn-danger">
+          <button class="btn btn-danger" (click)="removeAdditionalInfo(prop.key, prop.value)">
             <clr-icon shape="minus"></clr-icon> Field
           </button>
         </div>
