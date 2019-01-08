@@ -6,9 +6,9 @@ import {
   UserPasswordCredential,
   RemoteMongoCollection,
   RemoteMongoDatabase,
-  AnonymousCredential
+  AnonymousCredential,
+  StitchAppClient
 } from "mongodb-stitch-browser-sdk";
-import { stitchServiceErrorCodeFromApi } from '../../../../node_modules/mongodb-stitch-core-sdk/dist/esm/StitchServiceErrorCode';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +18,21 @@ export class StitchService {
   constructor(
   ) { }
 
-  APP_ID: string = 'electronupdater-wqses'
+  APP_ID: string // 'electronupdater-wqses'
   db: string
   coll: string
-  client = Stitch.initializeDefaultAppClient(this.APP_ID);
+  client: StitchAppClient
   creds: UserPasswordCredential
   // anonCreds: AnonymousCredential = new AnonymousCredential()
 
   // Return the E-mail password client from Stitch
   emailPassClient() {
-    return Stitch.defaultAppClient.auth.getProviderClient(UserPasswordAuthProviderClient.factory)
+    return Stitch.getAppClient(this.APP_ID).auth.getProviderClient(UserPasswordAuthProviderClient.factory)
+  }
+
+  connect_to_app (appID: string): void {
+    this.APP_ID = appID
+    if ( !Stitch.hasAppClient(this.APP_ID) ) this.client = Stitch.initializeAppClient(this.APP_ID)
   }
 
   retrieveDB(db = this.db) {

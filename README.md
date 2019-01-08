@@ -24,6 +24,7 @@ Clone the repository
 Install dependancies
 `cd ElectronAutoUpdateClient && npm i`
 
-Set the MongoDB Stitch APP ID in
-`/src/app/services/mongo/mongo.service.ts`
-It is currently hard-coded, but will not be in future versions.
+Start the application
+`npm run electron:local`
+
+Login with the proper creds to add or edit your applications

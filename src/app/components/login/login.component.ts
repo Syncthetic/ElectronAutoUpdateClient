@@ -22,19 +22,25 @@ export class LoginComponent implements OnInit {
   response: string
   attempts: number = 0
   login: string = ''
+  appID: string
 
   ngOnInit() {
   }
 
-  scratch() {
+  update_app_id (val: string): void {
+    this.appID = val
+  }
+
+  scratch (): void {
     this.error = false
     this.response = null
   }
 
-  loginAttempt(username, password) {
+  loginAttempt(username, password): void {
     if (this.attempts > 0) {
       this.scratch()
     }
+    this.stitch.connect_to_app(this.appID)
     this.stitch.login(username, password)
       .then(user => {
         console.log(username + ' logged in')
