@@ -1,6 +1,6 @@
 {
   "name": "electron-auto-update-client",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "A dektop application to manage applications utilizing electron-auto-update-api",
   "homepage": "https://github.com/Syncthetic/ElectronAutoUpdateClient",
   "bugs": "https://github.com/Syncthetic/ElectronAutoUpdateClient/issues",
